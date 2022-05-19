@@ -200,7 +200,7 @@ export class DynamoDBConnectionManager implements IConnectionManager {
       await this.createApiGatewayManager(connection.data.endpoint)
         .postToConnection({ ConnectionId: connection.id, Data: payload })
         .promise();
-    } catch (e) {
+    } catch (e: any) {
       // this is stale connection
       // remove it from DB
       if (e && e.statusCode === 410) {

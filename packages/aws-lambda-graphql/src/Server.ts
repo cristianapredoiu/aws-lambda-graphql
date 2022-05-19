@@ -206,7 +206,7 @@ export class Server<
     return this.subscriptionManager;
   }
 
-  public createGraphQLServerOptions(
+  public myCreateGraphQLServerOptions(
     event: APIGatewayProxyEvent,
     context: LambdaContext,
     internal?: Omit<
@@ -306,7 +306,7 @@ export class Server<
                 } else if (result !== null && typeof result === 'object') {
                   newConnectionContext = result;
                 }
-              } catch (err) {
+              } catch (err: any) {
                 const errorResponse = formatMessage({
                   type: SERVER_EVENT_TYPES.GQL_ERROR,
                   payload: { message: err.message },
@@ -409,7 +409,7 @@ export class Server<
                   } else if (result !== null && typeof result === 'object') {
                     newConnectionContext = result;
                   }
-                } catch (err) {
+                } catch (err: any) {
                   const errorResponse = formatMessage({
                     type: SERVER_EVENT_TYPES.GQL_ERROR,
                     payload: { message: err.message },
@@ -541,7 +541,7 @@ export class Server<
             // this makes sure that if you invoke the event
             // and you use Context creator function
             // then it'll be called with $$internal context according to spec
-            const options = await this.createGraphQLServerOptions(
+            const options = await this.myCreateGraphQLServerOptions(
               event,
               lambdaContext,
               {
@@ -608,7 +608,7 @@ export class Server<
             );
           }
         }
-      } catch (e) {
+      } catch (e: any) {
         this.onError(e);
 
         return {

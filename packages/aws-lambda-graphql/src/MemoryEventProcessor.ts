@@ -21,7 +21,7 @@ export class MemoryEventProcessor<TServer extends Server = Server>
   implements IEventProcessor<TServer, EventProcessorFn> {
   public createHandler(server: TServer): EventProcessorFn {
     return async function processEvents(events, lambdaContext = {}) {
-      const options = await server.createGraphQLServerOptions(
+      const options = await server.myCreateGraphQLServerOptions(
         events as any,
         lambdaContext,
       );
@@ -41,7 +41,7 @@ export class MemoryEventProcessor<TServer extends Server = Server>
           event,
         )) {
           const promises = subscribers
-            .map(async (subscriber) => {
+            .map(async (subscriber: any) => {
               // create PubSub for this subscriber
               const pubSub = new ArrayPubSub([event]);
 
@@ -80,7 +80,7 @@ export class MemoryEventProcessor<TServer extends Server = Server>
 
               return Promise.resolve();
             })
-            .map((promise) => promise.catch((e) => console.log(e)));
+            .map((promise: any) => promise.catch((e: any) => console.log(e)));
 
           await Promise.all(promises);
         }
